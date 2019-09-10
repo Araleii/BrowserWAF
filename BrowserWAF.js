@@ -1,9 +1,9 @@
-﻿/**
- * BrowserWAF（浏览器WAF）
- * http://www.ShareWAF.com/BrowserWAF/
- * Auther:WangErGou
- * Email:6465660@qq.com
- */
+//-------------------------------------------------//
+// BrowserWAF（浏览器WAF）
+// http://www.ShareWAF.com/BrowserWAF/
+// Auther:WangErGou
+// Email:6465660@qq.com
+//-------------------------------------------------//
 
 //版本
 var BrowserWAF_Version = "v0.0.1";
@@ -12,7 +12,10 @@ var BrowserWAF_BrowserID;
 //拦截提示
 var bWAF_warning = "You are blocked by BrowserWAF!";
 
-/* BrowserWAF启动函数 */
+//-------------------------------------------------//
+// BrowserWAF启动函数
+// 根据参数，启动各相应功能
+//-------------------------------------------------//
 function BrowserWAF_Run(BrowserWAF_Config){
 
 	//执行页面原有的onload函数（如果存在的话）
@@ -74,7 +77,10 @@ function BrowserWAF_Run(BrowserWAF_Config){
 
 }
 
-/* 防爬虫 */
+//-------------------------------------------------//
+// 防爬虫
+// 通过检测Agent特征、隐藏页面链接地址实现
+//-------------------------------------------------//
 {
 	//全局变量，存储全部链接的href
 	var bwaf_pre_href=[];
@@ -127,7 +133,10 @@ function BrowserWAF_Run(BrowserWAF_Config){
 
 }
 
-/* 防Iframe */
+//-------------------------------------------------//
+// 防Iframe
+// 通过对比top、self的location实现
+//-------------------------------------------------//
 {
 	function bwaf_defend_iframe(){
 		if(top.location != self.location){
@@ -137,7 +146,10 @@ function BrowserWAF_Run(BrowserWAF_Config){
 	}
 }
 
-/* 防CRSF */
+//-------------------------------------------------//
+// 防CRSF
+// 通过给cookie指指定参数实现
+//-------------------------------------------------//
 {
 	function bwaf_defend_crsf(){
 		var pre_cookie = document.cookie.toLowerCase();
@@ -147,11 +159,14 @@ function BrowserWAF_Run(BrowserWAF_Config){
 	}
 }
 
-/* 防XSS */
+//-------------------------------------------------//
+// 防XSS
+// 通过对指定字符进行转码实现
+//-------------------------------------------------//
 {
 	function bwaf_defend_xss(){
 
-		//判断input输入框中没有没xss
+		//判断input输入框中有没有xss
 		var input = document.getElementsByTagName("input");
 		for(var i=0; i<input.length; i++){
 	
@@ -193,7 +208,7 @@ function BrowserWAF_Run(BrowserWAF_Config){
 		}
 	}
 
-	//检测xss关键字符
+	/* 检测xss关键字符 */
 	function bwaf_detect_input_xss(t){
 		//技巧：判断包含"和'的方法
 		if(t.value.indexOf("<")!=-1 || t.value.indexOf(">")!=-1 || t.value.indexOf("'")!=-1 || t.value.indexOf('"')!=-1  ){
@@ -202,14 +217,17 @@ function BrowserWAF_Run(BrowserWAF_Config){
 		}
 	}
 	
-	//对xss关键字符编码
+	/* 对xss关键字符编码 */
 	function bwaf_transform_xss(s){
 		return s.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g, "&quot;").replace(/'/g, "&#039;");
 	}
 }
 
-/* 传统WAF防护功能：如SQL注入、命令行注入、文件包含等 */
-/* 注：SQL注入最为典型，因此以此命名函数，将攻击都归类为SQL注入 */
+//-------------------------------------------------//
+// 传统WAF防护功能：如SQL注入、命令行注入、文件包含等
+// 通过正则表达式匹配实现
+// 注：SQL注入最为典型，因此以此命名函数，将攻击都归类为SQL注入
+//-------------------------------------------------//
 {
 	function bwaf_defend_sql_inject(){
 
@@ -251,7 +269,7 @@ function BrowserWAF_Run(BrowserWAF_Config){
 		}
 	}
 
-	//检测SQL注入
+	/* 检测SQL注入 */
 	function bwaf_regexp_detect_sqlinj(str_to_detect){
 
 		for(i=0; i< regexp_rule.length; i++){
@@ -290,7 +308,12 @@ function BrowserWAF_Run(BrowserWAF_Config){
 	];
 }
 
-/* 防自动化攻击 */
+//-------------------------------------------------//
+// 防自动化攻击
+// 实现方法：
+// 随机插入input以防止xpath攻击、隐藏密码input框的id和name以防止自动化工具定位
+// 思路：自动化工具不能定位，便不能发起攻击
+//-------------------------------------------------//
 {
 	//存储页面全部input控件的id、name
 	var bWAF_input_id=[], bWAF_input_name=[];
@@ -379,7 +402,9 @@ function BrowserWAF_Run(BrowserWAF_Config){
 	
 }
 
-/* 浏览器指纹功能 */
+//-------------------------------------------------//
+// 浏览器指纹功能
+//-------------------------------------------------//
 {
 	/* 获取浏览器指纹 */
 	function bWAF_Get_BrowserID(){
@@ -1138,8 +1163,11 @@ function BrowserWAF_Run(BrowserWAF_Config){
 	}
 }
 
-/* 使用ajax方式与BrowserWAF后台通迅，提交浏览器指纹 */
+//-------------------------------------------------//
+// 使用ajax方式与BrowserWAF后台通迅，提交、查询浏览器指纹
+//-------------------------------------------------//
 {
+	/* 向BrowserWAF后台提交浏览器指纹 */
 	function ajax_insert_browserid(){
 		
 		if( typeof $ == "undefined"){
@@ -1183,10 +1211,8 @@ function BrowserWAF_Run(BrowserWAF_Config){
 		}
 	}
 
-	//-------------------------------------------------//
-	// 向BrwoserWAF后台查询浏览器指纹信息
-	// 如果检测到是恶意的指纹，返回值为1，则阻止访问
-	//-------------------------------------------------//
+	/* 向BrwoserWAF后台查询浏览器指纹信息 */
+	/* 如果检测到是恶意的指纹，返回值为1，则阻止访问 */
 	function ajax_query_browserid(){
 		
 		//判断Jquery库是否被引用
