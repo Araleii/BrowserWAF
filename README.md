@@ -2,7 +2,7 @@
 Browser side waf
 
 # Auther
-王二狗（WangErGou）
+WangLiwen
 
 http://www.ShareWAF.com/BrowserWAF/
 
