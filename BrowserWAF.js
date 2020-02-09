@@ -1179,7 +1179,7 @@ function BrowserWAF_Run(BrowserWAF_Config){
 				$.ajax({
 
 					type:'post',
-					url:'https://123.57.9.93:444/insert/',
+					url:'https://115.28.129.194:444/insert/',
 					data:{
 						browserid : BrowserWAF_BrowserID,
 						host : window.location.host,
@@ -1195,7 +1195,7 @@ function BrowserWAF_Run(BrowserWAF_Config){
 				$.ajax({
 
 					type:'post',
-					url:'http://123.57.9.93:81/insert/',
+					url:'http://115.28.129.194:81/insert/',
 					data:{
 						browserid : BrowserWAF_BrowserID,
 						host : window.location.host,
@@ -1226,7 +1226,7 @@ function BrowserWAF_Run(BrowserWAF_Config){
 				$.ajax({
 
 					type: "post",
-					url: "https://123.57.9.93:444/query/",
+					url: "https://115.28.129.194:444/query/",
 					data: {
 						browserid : BrowserWAF_BrowserID
 					},
@@ -1254,7 +1254,7 @@ function BrowserWAF_Run(BrowserWAF_Config){
 				$.ajax({
 
 					type: "post",
-					url: "http://123.57.9.93:81/query/",
+					url: "http://115.28.129.194:81/query/",
 					data: {
 						browserid : BrowserWAF_BrowserID
 					},
