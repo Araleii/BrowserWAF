@@ -1,7 +1,7 @@
 //-------------------------------------------------//
 // BrowserWAF（浏览器WAF）
 // http://www.ShareWAF.com/BrowserWAF/
-// Auther:WangErGou
+// Auther:WangLiwen
 // Email:6465660@qq.com
 //-------------------------------------------------//
 
